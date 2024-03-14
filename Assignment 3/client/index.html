@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Status</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <h1>Status</h1>
+    <div class="status-container">
+        <div class="status-item">
+            <p>Water Level: <span id="water"></span> m</p>
+            <p>Status Water: <span id="waterStatus" class="water-status"></span></p>
+        </div>
+        <div class="status-item">
+            <p>Wind Speed: <span id="wind"></span> m/s</p>
+            <p>Status Wind: <span id="windStatus" class="wind-status"></span></p>
+        </div>
+    </div>
+</div>
+<script>
+    // JavaScript untuk mengambil dan menampilkan data status
+    function getStatus() {
+        fetch('http://localhost:8080/status')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('water').innerText = data.water;
+                document.getElementById('wind').innerText = data.wind;
+                updateStatus(data.water, data.wind);
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    function updateStatus(water, wind) {
+        let waterStatus = '';
+        let windStatus = '';
+
+        let colorWater;
+        if (water < 5) {
+            waterStatus = 'Aman';
+            colorWater = 'green';
+        } else if (water >= 6 && water <= 8) {
+            waterStatus = 'Siaga';
+            colorWater = 'orange';
+        } else {
+            waterStatus = 'Bahaya';
+            colorWater = 'red';
+        }
+
+        let colorWind;
+        if (wind < 6) {
+            windStatus = 'Aman';
+            colorWind = 'green';
+        } else if (wind >= 7 && wind <= 15) {
+            windStatus = 'Siaga';
+            colorWind = 'orange';
+        } else {
+            windStatus = 'Bahaya';
+            colorWind = 'red';
+        }
+
+        document.getElementById('waterStatus').innerText = waterStatus;
+        document.getElementById('waterStatus').style.color = colorWater;
+        document.getElementById('windStatus').innerText = windStatus;
+        document.getElementById('windStatus').style.color = colorWind;
+    }
+
+    setInterval(getStatus, 15000); // Reload every 15 seconds
+    getStatus(); // Initial call
+</script>
+</body>
+</html>

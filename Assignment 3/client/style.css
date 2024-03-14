@@ -1,0 +1,38 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+}
+
+.status-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.status-item {
+    flex: 0 0 45%;
+}
+
+.status-item p {
+    margin: 10px 0;
+}
+
+.water-status, .wind-status {
+    font-weight: bold;
+    color: #000;
+}
